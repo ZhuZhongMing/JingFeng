@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.jf.mapper.MMainplanMapper">
+
+	<delete id="deleteByMainId" parameterType="java.lang.String">
+		DELETE 
+		FROM  m_mainplan
+		WHERE
+			 MainPlanAbstractId = #{mainId} 	</delete>
+	
+	<select id="selectByMainId" parameterType="java.lang.String" resultType="org.jeecg.modules.jf.entity.MMainplan">
+		SELECT * 
+		FROM  m_mainplan
+		WHERE
+			 MainPlanAbstractId = #{mainId} 	</select>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.jf.mapper.MOrderlistMapper">
+
+	<delete id="deleteByMainId" parameterType="java.lang.String">
+		DELETE 
+		FROM  m_orderlist
+		WHERE
+			 OrderId = #{mainId} 	</delete>
+	
+	<select id="selectByMainId" parameterType="java.lang.String" resultType="org.jeecg.modules.jf.entity.MOrderlist">
+		SELECT * 
+		FROM  m_orderlist
+		WHERE
+			 OrderId = #{mainId} 	</select>
+
+
+    <select id="getSumMaterial" resultType="java.lang.Integer">
+		select sum(OrderNum)
+		from m_orderlist
+	</select>
+
+	<select id="getSumMaterialBytime" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select sum(OrderNum)
+		from m_orderlist
+		where create_time &gt; #{time}
+	</select>
+
+	<!-- 根据订单号分页查询订单明细 -->
+    <select id="queryPageOrderList" resultType="org.jeecg.modules.jf.entity.MOrderlist" parameterType="java.lang.String">
+		select a.*,b.productname
+		from m_orderlist a,m_product_map b
+		WHERE a.MaterialEncode = b.id and a.OrderId = #{orderid}
+	</select>
+
+	<!-- 根据订单号查询订单明细 -->
+    <select id="queryOrderListByMainId" resultType="org.jeecg.modules.jf.entity.MOrderlist">
+		select a.*,b.productname
+		from m_orderlist a,m_product_map b
+		WHERE a.MaterialEncode = b.id and a.OrderId = #{orderid}
+	</select>
+
+	<!--/*根据订单统计分配情况*/-->
+	<select id="sumAllotByid" resultType="java.lang.Integer" parameterType="java.lang.String">
+			select sum(allotNumber)
+			from m_orderlist
+			where OrderId = #{orderid}
+	</select>
+</mapper>

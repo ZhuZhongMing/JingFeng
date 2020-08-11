@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.jf.mapper.REquipmentMapper">
+    <!-- 查询用户的所属部门名称信息 -->
+    <select id="getWSNamesByIds" resultType="org.jeecg.modules.jf.entity.REquipment">
+        select a.wsname,b.id from m_workshop a , r_equipment b where a.id = b.workshopid and b.id in
+        <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!-- 根据设备编号统计今日产能 -->
+    <select id="sumByDPD" resultType="java.math.BigDecimal" parameterType="org.jeecg.modules.jf.entity.REquipment">
+        SELECT SUM(rData) as rData
+        FROM rdailycapacity
+        WHERE EquipID = #{id} and create_time like #{wsname}
+    </select>
+
+    <!-- 根据检测设备编号统计今日不合格数量 -->
+    <select id="sumUnqualifiedByCPD" resultType="java.math.BigDecimal" parameterType="org.jeecg.modules.jf.entity.REquipment">
+        SELECT SUM(rData) as runqualifieddata
+        FROM rdisqualification
+        WHERE EquipID = #{id} and create_time like #{wsname}
+    </select>
+
+</mapper>

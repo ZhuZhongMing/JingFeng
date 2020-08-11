@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.jf.mapper.RAcquisitionnodeAMapper">
+
+    <!--<select id="queryNode" resultType="org.jeecg.modules.jf.vo.NodeVO" parameterType="java.lang.String">
+        SELECT r_acquisitionnode.*,r_nodedata.rData
+        FROM r_nodedata,r_acquisitionnode
+        WHERE r_nodedata.NodeID = r_acquisitionnode.id AND r_nodedata.NodeID IN (SELECT id
+        FROM r_acquisitionnode
+        WHERE EquipID = #{id}) and r_nodedata.create_time &gt; #{time}
+    </select>-->
+
+    <select id="sumRdata" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select sum(rdata)
+        from r_nodedata
+        where create_time &gt; #{time}
+    </select>
+
+    <select id="getsumRdata" resultType="java.lang.Integer">
+        select sum(rdata)
+        from r_nodedata
+    </select>
+    <select id="gettodaynode" resultType="org.jeecg.modules.jf.vo.NodeVO" parameterType="java.lang.String">
+        select r_acquisitionnode.*,r_nodedata.rData
+        FROM r_acquisitionnode,r_nodedata
+        where r_acquisitionnode.id in (SELECT NodeID FROM r_nodedata) AND r_nodedata.create_time > #{time}
+    </select>
+    <!--<select id="getsumnode" resultType="org.jeecg.modules.jf.vo.NodeVO">
+        select r_acquisitionnode.*,r_nodedata.rData
+        FROM r_acquisitionnode,r_nodedata
+        where r_acquisitionnode.id in (SELECT NodeID FROM r_nodedata)
+    </select>-->
+
+    <select id="sumData" resultType="java.lang.Integer" parameterType="org.jeecg.modules.jf.entity.RAcquisitionnodeA">
+        select SUM(rdata)
+        from r_nodedata
+        where nodeid = #{id} and create_time between #{createTime} and NOW()
+
+    </select>
+
+</mapper>

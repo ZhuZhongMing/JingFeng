@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.jf.mapper.MProductMapMapper">
+
+    <select id="pageList" resultType="org.jeecg.modules.jf.entity.MProductMap">
+        SELECT a.*,b.MaterialName as topbladename , c.MaterialName as bottombladename , d.MaterialName as connectionbladename , e.MaterialName as driverbladename , f.MaterialName as rivetname
+        FROM m_product_map a,m_material b,m_material c,m_material d,m_material e,m_material f
+        WHERE a.TopBlade = b.id and a.BottomBlade = c.id and a.ConnectionBlade = d.id and a.DriverBlade = e.id and a.Rivet = f.id
+        ORDER BY create_time desc
+    </select>
+
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.jf.mapper.MMainplanabstractMapper">
+
+    <select id="findMaxID" resultType="org.jeecg.modules.jf.entity.MMainplanabstract">
+        SELECT id
+        FROM m_mainplanabstract
+        WHERE create_time in (SELECT Max(create_time)
+        FROM m_mainplanabstract)
+    </select>
+
+    <!-- 查看个人未完成主计划   and m_mainplan.PlanStatusId !=2 -->
+    <select id="getList" resultType="org.jeecg.modules.jf.vo.MMyPlanPage" parameterType="java.lang.String">
+        SELECT m_mainplan.id,m_mainplan.create_by,m_mainplan.create_time,m_mainplan.materialencode,m_material.MaterialName,m_mainplan.Number,m_mainplan.StartTime,m_mainplan.FinishTime,m_mainplan.Disp,m_mainplanabstract.SalesmanId,m_mainplan.PlanStatusId
+        FROM m_mainplan,m_material,m_mainplanabstract
+        WHERE m_mainplan.MaterialEncode = m_material.id AND m_mainplan.MainPlanAbstractId = m_mainplanabstract.id and m_mainplanabstract.SalesmanId = #{id}
+    </select>
+
+    <!-- 查看主计划详情 -->
+    <select id="getByMainId" resultType="org.jeecg.modules.jf.vo.MMyPlanPage" parameterType="String">
+        SELECT a.DeptId,a.SalesmanId,a.PlanTypeId,a.SaleDate,a.AuditorId,a.AuditDate,a.AuditStatus, b.* ,m_material.MaterialName
+        FROM m_mainplanabstract a,m_mainplan b,m_material
+        WHERE b.MainPlanAbstractId = a.id AND b.MaterialEncode = m_material.id and b.id = #{id}
+    </select>
+
+    <select id="countByid" resultType="org.jeecg.modules.jf.vo.MMyPlanPage" parameterType="java.lang.String">
+        SELECT m_mainplan.id,m_mainplan.create_by,m_mainplan.create_time,m_mainplan.materialencode,m_material.MaterialName,m_mainplan.Number,m_mainplan.StartTime,m_mainplan.FinishTime,m_mainplan.Disp,m_mainplanabstract.SalesmanId,m_mainplan.PlanStatusId
+        FROM m_mainplan,m_material,m_mainplanabstract
+        WHERE m_mainplan.MaterialEncode = m_material.id AND m_mainplan.MainPlanAbstractId = m_mainplanabstract.id and m_mainplanabstract.SalesmanId = #{id} and m_mainplan.PlanStatusId = 0
+    </select>
+</mapper>

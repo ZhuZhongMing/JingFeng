@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.jf.mapper.MMaterialMapper">
+
+    <select id="queryListPage" resultType="org.jeecg.modules.jf.entity.MMaterial">
+        SELECT a.*,b.MCategoryName
+        FROM m_material a,m_materialcategory b
+        WHERE a.MaterialTypeEncode = b.id
+    </select>
+</mapper>

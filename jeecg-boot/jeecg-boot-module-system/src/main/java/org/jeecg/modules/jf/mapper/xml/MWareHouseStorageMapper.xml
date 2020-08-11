@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.jf.mapper.MWareHouseStorageMapper">
+
+    <select id="List" resultType="org.jeecg.modules.jf.entity.MWareHouseStorage">
+        SELECT m_warehousestorage.* , m_material.MaterialName , m_warehouse.WHName
+        FROM m_warehousestorage , m_material , m_warehouse
+        WHERE m_warehousestorage.MaterialEncode = m_material.id and m_warehousestorage.WareHouseId = m_warehouse.id
+    </select>
+</mapper>
